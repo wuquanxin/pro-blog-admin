@@ -1,0 +1,40 @@
+{
+  "name": "amdin-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build-main": "vue-cli-service build --mode main"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "element-ui": "^2.8.2",
+    "font-awesome": "^4.7.0",
+    "nprogress": "^0.2.0",
+    "vue": "^2.6.10",
+    "vue-aplayer": "^1.6.1",
+    "vue-color": "^2.7.0",
+    "vue-dplayer": "^0.0.10",
+    "vue-router": "^3.0.6",
+    "vue-ueditor-wrap": "^2.4.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-service": "^3.6.0",
+    "babel-plugin-import": "^1.11.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

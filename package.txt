@@ -1,0 +1,16 @@
+v-charts （vue图表库基于eharts和vue）
+https://v-charts.js.org/#/
+
+
+vue-froala-wysiwyg （vue富文本编辑器，功能比百度dediter更好）
+https://github.com/froala/vue-froala-wysiwyg
+
+
+vue-aplayer （vue简易音乐播放器）
+https://github.com/SevenOutman/vue-aplayer
+
+
+vue-aplayer （vue版本Dplayer，知名h5视频播放器）
+https://github.com/MoePlayer/vue-dplayer
+
+
