@@ -17,7 +17,8 @@
     "vue-color": "^2.7.0",
     "vue-dplayer": "^0.0.10",
     "vue-router": "^3.0.6",
-    "vue-ueditor-wrap": "^2.4.1"
+    "vue-ueditor-wrap": "^2.4.1",
+    "vue2-editor": "^2.8.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",

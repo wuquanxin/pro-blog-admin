@@ -22,7 +22,7 @@
             <img :src="userData.headImg">
           </div>
           <el-dropdown-menu slot="dropdown">
-					  <router-link class="inlineBlock" to="/main">
+					 <!--  <router-link class="inlineBlock" to="/main">
 						  <el-dropdown-item>
 								<i class="fa fa-cog" aria-hidden="true"></i>
 								<span>网站信息</span>
@@ -39,7 +39,7 @@
 								<i class="fa fa-lock" aria-hidden="true"></i>
 								<span>密码修改</span>
 						  </el-dropdown-item>
-	          </router-link>
+	          </router-link> -->
           <el-dropdown-item>
             <i class="fa fa-sign-out" aria-hidden="true"></i>
             <span @click="loginOutHandle">退出登陆</span>

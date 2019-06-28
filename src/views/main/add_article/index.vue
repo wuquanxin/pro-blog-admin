@@ -9,110 +9,123 @@
       <el-form-item label="文章描述" :label-width="formLabelWidth">
         <el-input type="textarea" :rows="4" v-model="form.desc" autocomplete="off" placeholder="请输入文章描述"></el-input>
       </el-form-item>
+      <el-form-item label="选择标签" :label-width="formLabelWidth">
+        <el-select v-model="value" placeholder="请选择">
+          <el-option v-for="item in options" :key="item._id" :label="item.tagname" :value="item._id">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <!--  -->
-      <div>
-      	<h4 style="margin-left: 40px;font-weight:normal">文章内容：</h4>
-      	<vue-editor v-model="content"></vue-editor>
+      <div class="clearfix">
+        <h4 style="margin-left: 40px;font-weight:normal;float: left">文章内容：</h4>
+        <vue-editor v-model="content" style="float:left;width:900px;margin-top:0"></vue-editor>
       </div>
-
     </el-form>
-    <div slot="footer" align="right" class="footer">
+    <div slot="footer" align="center" class="footer">
       <el-button type="primary" @click="submitHandle">保 存</el-button>
       <el-button @click="$router.go(-1)">返 回</el-button>
     </div>
   </div>
 </template>
 <script>
-import { get, update } from "@/api/lecture_editor";
-import { VueEditor } from "vue2-editor";
-import { setBodyBg, isMain, isDev } from "@u/tools";
+import {
+  tagFind
+} from "@/api/lecture_editor";
+import {
+  VueEditor
+} from "vue2-editor";
+import {
+  setBodyBg,
+  isMain,
+  isDev
+} from "@u/tools";
 export default {
   data() {
-    return {
-      formLabelWidth: '110px',
-      toggleShow: false,
-      form: {
-        id: null,
-        name: "",
-        desc: ""
+      return {
+        formLabelWidth: '110px',
+        toggleShow: false,
+        form: {
+          id: null,
+          name: "",
+          desc: ""
+        },
+        content: "<h3>请输入文章内容：</h3><h1>文章内容：</h1>",
+        options: [],
+        value: ''
+      };
+    },
+    methods: {
+      ylHandle() {
+        this.preview = !this.toggleShow ? "收 起" : "预 览";
+        return (this.toggleShow = !this.toggleShow);
       },
-      content: "<h3>请输入文章内容：</h3>"
-    };
-  },
-  methods: {
-    ylHandle() {
-      this.preview = !this.toggleShow ? "收 起" : "预 览";
-      return (this.toggleShow = !this.toggleShow);
-    },
-    pullData() {
-      // loading
-      // this.$showLoading();
-      // get({
-      //   id: this.$route.query.id
-      // }).then(data => {
-      //   this.form = data.item;
-      //   this.$hideLoading();
-      // });
-    },
-    // 提交修改后的数据
-    submitHandle(){
-      if(
-        this.form.id &&
-        this.form.name &&
-        this.form.source &&
-        this.form.desc &&
-        this.form.text &&
-        this.form.end_time &&
-        this.form.text_end &&
-        this.form.link &&
-        this.form.detail
-      ){
+      pullData() {
+        this.$showLoading();
+        tagFind()
+        .then(data => {
+          this.options = data.taggroup;
+          this.$hideLoading();
+        });
+      },
+      // 提交修改后的数据
+      submitHandle() {
+        if (
+          this.form.id &&
+          this.form.name &&
+          this.form.source &&
+          this.form.desc &&
+          this.form.text &&
+          this.form.end_time &&
+          this.form.text_end &&
+          this.form.link &&
+          this.form.detail
+        ) {
           update({
-            id:this.form.id,
-            name:this.form.name,
-            source:this.form.source,
-            desc:this.form.desc,
-            text:this.form.text,
-            end_time:this.form.end_time,
-            text_end:this.form.text_end,
-            link:this.form.link,
-            detail:this.form.detail
-          }).then((data)=>{
+            id: this.form.id,
+            name: this.form.name,
+            source: this.form.source,
+            desc: this.form.desc,
+            text: this.form.text,
+            end_time: this.form.end_time,
+            text_end: this.form.text_end,
+            link: this.form.link,
+            detail: this.form.detail
+          }).then((data) => {
             this.$message({
               message: '提交成功！',
               type: 'success'
             });
             this.$router.push('/main/lecture_editor');
           });
-      }else{
-        this.$message({
-          message: '数据不能为空！',
-          type: 'warning'
-        });
+        } else {
+          this.$message({
+            message: '数据不能为空！',
+            type: 'warning'
+          });
+        }
       }
-    }
-  },
-  components: {
+    },
+    components: {
       VueEditor
     },
-  created() {
-    this.pullData();
-  }
+    created() {
+      this.pullData();
+    }
 };
 </script>
-
 <style lang="scss" scoped>
 .form {
   padding: 15px 15px 15px 60px;
-  .el-input,.el-textarea {
+  .el-input,
+  .el-textarea {
     width: 800px;
   }
-  #ue-box{
+  #ue-box {
     width: 800px;
     display: inline-block;
     line-height: 1;
   }
-  .footer{
+  .footer {
     margin-top: 60px;
   }
   .phone-box {
@@ -127,7 +140,7 @@ export default {
     box-shadow: 0 0 5px #666;
     transition: all 0.6s;
     overflow: hidden;
-    .stereo{
+    .stereo {
       width: 40px;
       height: 10px;
       background-color: rgba(51, 51, 51, 0.6);
@@ -144,30 +157,30 @@ export default {
       left: 15px;
       right: 15px;
       bottom: 55px;
-      .header{
-        background: linear-gradient(#1d1c21,#3c3c3c);
-        padding:30px 10px;
+      .header {
+        background: linear-gradient(#1d1c21, #3c3c3c);
+        padding: 30px 10px;
         display: flex;
         align-items: center;
         color: #ffffff;
-        .left{
+        .left {
           font-size: 14px;
           color: #feca05;
-          span{
+          span {
             font-size: 24px;
           }
         }
-        .center{
+        .center {
           border-left: 1px solid #666;
           padding-left: 8px;
           margin-left: 8px;
           font-size: 14px;
-          span{
+          span {
             font-size: 18px;
             font-weight: normal;
           }
         }
-        .right{
+        .right {
           width: 50px;
           height: 50px;
           background-color: #dddddd;
@@ -176,29 +189,29 @@ export default {
           flex: none;
           margin-left: auto;
         }
-        img{
+        img {
           width: 100%;
           height: 100%;
         }
       }
-      .tab{
-        margin: -20px  10px auto;
+      .tab {
+        margin: -20px 10px auto;
         display: flex;
         font-size: 14px;
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 3px 1px 1px #cccccc;
         padding: 10px 0;
-        .tab-head{
+        .tab-head {
           flex: 1;
           text-align: center;
-          img{
-            width:30px;
+          img {
+            width: 30px;
             height: 30px;
           }
         }
       }
-      .content{
+      .content {
         font-size: 14px;
         background-color: #fff;
         border-radius: 8px;
@@ -224,9 +237,10 @@ export default {
     cursor: pointer;
   }
 }
+
 .quillWrapper {
-	width: 1010px;
-	margin-top: 20px;
-	background: rgba(0,0,0,.3);
+  width: 1010px;
+  margin-top: 20px;
+  background: rgba(0, 0, 0, .3);
 }
 </style>

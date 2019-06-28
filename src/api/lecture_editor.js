@@ -32,3 +32,19 @@ export function add(data){
     data: data || {}
 	})
 }
+// 添加标签
+export function tagAdd(data){
+	return request({
+		url: '/web/tagAdd',
+    method: 'POST',
+    data: data || {}
+	})
+}
+// 查询标签
+export function tagFind(data){
+	return request({
+		url: '/web/tagFind',
+    method: 'POST',
+    data: data || {}
+	})
+}

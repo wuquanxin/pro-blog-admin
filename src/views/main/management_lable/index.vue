@@ -3,11 +3,11 @@
   <div class="form">
     <el-form :model="form">
       <el-form-item label="标签名称" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" placeholder="请输入要添加的标签名称"></el-input>
+        <el-input v-model="form.tagname" autocomplete="off" placeholder="请输入要添加的标签名称"></el-input>
       </el-form-item>
       <!--  -->
       <el-form-item label="标签说明" :label-width="formLabelWidth">
-        <el-input type="textarea" :rows="4" v-model="form.desc" autocomplete="off" placeholder="请输入标签说明"></el-input>
+        <el-input type="textarea" :rows="4" v-model="form.tagdesc" autocomplete="off" placeholder="请输入标签说明"></el-input>
       </el-form-item>
 
     </el-form>
@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import { get, update } from "@/api/lecture_editor";
+import { tagAdd } from "@/api/lecture_editor";
 import { VueEditor } from "vue2-editor";
 import { setBodyBg, isMain, isDev } from "@u/tools";
 export default {
@@ -27,11 +27,9 @@ export default {
       formLabelWidth: '110px',
       toggleShow: false,
       form: {
-        id: null,
-        name: "",
-        desc: ""
-      },
-      content: "<h3>请输入文章内容：</h3>"
+        tagname: "",
+        tagdesc: ""
+      }
     };
   },
   methods: {
@@ -52,32 +50,17 @@ export default {
     // 提交修改后的数据
     submitHandle(){
       if(
-        this.form.id &&
-        this.form.name &&
-        this.form.source &&
-        this.form.desc &&
-        this.form.text &&
-        this.form.end_time &&
-        this.form.text_end &&
-        this.form.link &&
-        this.form.detail
+        this.form.tagname &&
+        this.form.tagdesc
       ){
-          update({
-            id:this.form.id,
-            name:this.form.name,
-            source:this.form.source,
-            desc:this.form.desc,
-            text:this.form.text,
-            end_time:this.form.end_time,
-            text_end:this.form.text_end,
-            link:this.form.link,
-            detail:this.form.detail
+          tagAdd({
+            tagname:this.form.tagname,
+            tagdesc:this.form.tagdesc
           }).then((data)=>{
             this.$message({
               message: '提交成功！',
               type: 'success'
             });
-            this.$router.push('/main/lecture_editor');
           });
       }else{
         this.$message({
