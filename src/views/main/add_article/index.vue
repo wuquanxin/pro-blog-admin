@@ -10,7 +10,7 @@
         <el-input type="textarea" :rows="4" v-model="form.desc" autocomplete="off" placeholder="请输入文章描述"></el-input>
       </el-form-item>
       <el-form-item label="选择标签" :label-width="formLabelWidth">
-        <el-select v-model="value" placeholder="请选择">
+        <el-select v-model="tagid" placeholder="请选择">
           <el-option v-for="item in options" :key="item._id" :label="item.tagname" :value="item._id">
           </el-option>
         </el-select>
@@ -29,7 +29,7 @@
 </template>
 <script>
 import {
-  tagFind
+  tagFind,articleAdd
 } from "@/api/lecture_editor";
 import {
   VueEditor
@@ -45,13 +45,12 @@ export default {
         formLabelWidth: '110px',
         toggleShow: false,
         form: {
-          id: null,
           name: "",
           desc: ""
         },
-        content: "<h3>请输入文章内容：</h3><h1>文章内容：</h1>",
+        content: "<h3>请输入文章内容：</h3>",
         options: [],
-        value: ''
+        tagid: ''
       };
     },
     methods: {
@@ -70,32 +69,22 @@ export default {
       // 提交修改后的数据
       submitHandle() {
         if (
-          this.form.id &&
           this.form.name &&
-          this.form.source &&
           this.form.desc &&
-          this.form.text &&
-          this.form.end_time &&
-          this.form.text_end &&
-          this.form.link &&
-          this.form.detail
+          this.content &&
+          this.tagid
         ) {
-          update({
-            id: this.form.id,
+          articleAdd({
             name: this.form.name,
-            source: this.form.source,
             desc: this.form.desc,
-            text: this.form.text,
-            end_time: this.form.end_time,
-            text_end: this.form.text_end,
-            link: this.form.link,
-            detail: this.form.detail
+            content: this.content,
+            tagid: this.tagid
           }).then((data) => {
             this.$message({
               message: '提交成功！',
               type: 'success'
             });
-            this.$router.push('/main/lecture_editor');
+            // this.$router.push('/main/lecture_editor');
           });
         } else {
           this.$message({

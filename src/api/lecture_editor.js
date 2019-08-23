@@ -48,3 +48,19 @@ export function tagFind(data){
     data: data || {}
 	})
 }
+// 查询标签
+export function articleAdd(data){
+	return request({
+		url: '/web/articleAdd',
+    method: 'POST',
+    data: data || {}
+	})
+}
+// 文章列表
+export function articleList(data){
+	return request({
+		url: '/web/articleList',
+    method: 'POST',
+    data: data || {}
+	})
+}

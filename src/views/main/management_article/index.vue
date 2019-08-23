@@ -7,8 +7,9 @@
         <el-table :data="list" show-overflow-tooltip border style="width: 100%">
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column type="index" width="100" label="序号"></el-table-column>
-          <el-table-column prop="id" label="ID" width="100"></el-table-column>
-          <el-table-column prop="name" label="讲座名称"></el-table-column>
+          <!-- <el-table-column prop="_id" label="ID" width="100"></el-table-column> -->
+          <el-table-column prop="articlename" label="文章名称"></el-table-column>
+          <el-table-column prop="tagname" label="标签名称"></el-table-column>
           <el-table-column label="操作" width="180">
               <template slot-scope="scope">
                   <el-button type="primary" size="mini" icon="el-icon-edit" @click="updateHandle(scope.$index, scope.row)" circle></el-button>
@@ -35,7 +36,7 @@
 
 <script>
 import { setBodyBg  } from "@u/tools";
-import { list,add } from "@/api/lecture_editor";
+import { articleList,add } from "@/api/lecture_editor";
 export default {
   data() {
     return {
@@ -88,17 +89,14 @@ export default {
     },
     //   获取列表数据
     pullData() {
-      this.list = [{id:"12",name:"是多会解决"},{id:"13",name:"54sdsd"}];
-      // loading
-      // this.$showLoading();
-      // list({
-      //   page:this.pages?this.pages.page:null,  //页码，默认1
-      //   size:this.pages?this.pages.size:null   //每页数量，默认25
-      // }).then(data => {
-      //   this.list = data.list;
-      //   this.pages = data.pager;
-      //   this.$hideLoading();
-      // });
+      this.$showLoading();
+      articleList({
+        // page:this.pages?this.pages.page:null,  //页码，默认1
+        // size:this.pages?this.pages.size:null   //每页数量，默认25
+      }).then(data => {
+        this.list = data.taggroup;
+        this.$hideLoading();
+      });
     }
   },
   created() {
